@@ -4,9 +4,8 @@
 fun sum(array: Array<Int>): Int = divideAndConquer(array, 0, array.size - 1)
 
 fun divideAndConquer(array: Array<Int>, begin: Int, end: Int): Int {
-	if (begin == end) {
-		return array[begin]
-	}
+	if (begin == end) return array[begin]
+	
 	val mid = (begin + end) / 2;
 	var maxLeftSum = 0
 	var maxRightSum = 0
