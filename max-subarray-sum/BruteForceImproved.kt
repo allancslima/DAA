@@ -1,6 +1,6 @@
 /**
-* Complexity of O(n^2).
-*/
+ * Complexity of O(n^2).
+ */
 fun sum(array: Array<Int>): Int {
 	var maxSum = 0
 
