@@ -47,8 +47,8 @@ operator fun Array<Array<Int>>.minus(other: Array<Array<Int>>): Array<Array<Int>
 /**
  * Multiplies two square matrices of size 2^n, where n is the size of the matrix side.
  *
- * @param a matrix.
- * @param b matrix.
+ * @param a matrix a.
+ * @param b matrix b.
  * @return matrix of size 2^n.
  */
 fun multiplyMatrices(a: Array<Array<Int>>, b: Array<Array<Int>>): Array<Array<Int>> {
@@ -97,8 +97,8 @@ fun multiplyMatrices(a: Array<Array<Int>>, b: Array<Array<Int>>): Array<Array<In
 /**
  * Multiplies two 2x2 matrices.
  *
- * @param a matrix.
- * @param b matrix.
+ * @param a matrix a.
+ * @param b matrix b.
  * @return 2x2 matrix.
  */
 fun multiply2dMatrices(a: Array<Array<Int>>, b: Array<Array<Int>>): Array<Array<Int>> {
@@ -116,7 +116,13 @@ fun multiply2dMatrices(a: Array<Array<Int>>, b: Array<Array<Int>>): Array<Array<
  * Returns the quadrant corresponding to the given position of a 2^n matrix.
  *
  * @param m matrix.
- * @param quadrant quadrant position, that's 1, 2, 3 or 4.
+ * @param quadrant
+ *        quadrant position, it can be 1, 2, 3 or 4 where:
+ *        1 to top left quadrant;
+ *        2 to top right quadrant;
+ *        3 to bottom left quadrant;
+ *        4 to bottom right quadrant.
+ *
  * @return specified quadrant.
  */
 fun quadrantFromMatrix(m: Array<Array<Int>>, quadrant: Int): Array<Array<Int>> {
@@ -144,10 +150,10 @@ fun quadrantFromMatrix(m: Array<Array<Int>>, quadrant: Int): Array<Array<Int>> {
 /**
  * Builds a matrix from the given quadrants.
  *
- * @param c11 left top quadrant.
- * @param c12 right top quadrant.
- * @param c21 left bottom quadrant.
- * @param c22 right bottom quadrant.
+ * @param c11 top left quadrant.
+ * @param c12 top right quadrant.
+ * @param c21 bottom left quadrant.
+ * @param c22 bottom right quadrant.
  * @return square matrix of side equal to quadrant side * 2.
  */
 fun matrixFromQuadrants(
@@ -181,8 +187,11 @@ fun printMatrix(m: Array<Array<Int>>) {
 
     for (i in 0 until n) {
         for (j in 0 until n) {
-            print("${m[i][j]} ")
+            if (j < n - 1) {
+                print("${m[i][j]} ")
+            } else {
+                println("${m[i][j]}")
+            }
         }
-        println()
     }
 }
