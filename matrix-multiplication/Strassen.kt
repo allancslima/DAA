@@ -196,6 +196,22 @@ fun printMatrix(m: Array<Array<Long>>, rows: Int, cols: Int) {
     }
 }
 
+/**
+ * Returns the next 2^e value from given input.
+ *
+ * @param n starting number.
+ * @return next 2^e value from parameter n.
+ */
+fun nextPowerOfTwo(n: Int): Int {
+    var e = 1
+    var p = 2
+
+    while (n > p) {
+        p = Math.pow(2.0, (++e).toDouble()).toInt()
+    }
+    return p
+}
+
 fun main(args: Array<String>) {
     val scanner = Scanner(System.`in`)
     val n1 = scanner.nextInt()
@@ -206,7 +222,8 @@ fun main(args: Array<String>) {
     if (m1 != n2) {
         throw RuntimeException("M1 != N2")
     }
-    val n = if (m1 % 2 != 0) m1 + 1 else m1
+    val max = Math.max(Math.max(n1, m2), m1)
+    val n = nextPowerOfTwo(max)
     val a = newSquareMatrix(n)
     val b = newSquareMatrix(n)
 
