@@ -222,6 +222,9 @@ fun main(args: Array<String>) {
     }
     scanner.close()
 
-    println("\nResult:\n")
+    val start = System.currentTimeMillis()
     printMatrix(multiplyMatrices(a, b), n1, m2)
+    val end = System.currentTimeMillis()
+
+    println("\nTime: ${(end - start) / 1000.0} seconds")
 }
