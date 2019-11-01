@@ -1,11 +1,13 @@
+import java.util.Scanner
+
 /**
  * Returns a matrix with the same number of rows and columns.
  *
  * @param n number of rows and columns.
  * @return NxN matrix of 0s.
  */
-fun newSquareMatrix(n: Int): Array<Array<Int>> {
-    return Array<Array<Int>>(n) { Array<Int>(n) { 0 } }
+fun newSquareMatrix(n: Int): Array<Array<Long>> {
+    return Array<Array<Long>>(n) { Array<Long>(n) { 0 } }
 }
 
 /**
@@ -14,7 +16,7 @@ fun newSquareMatrix(n: Int): Array<Array<Int>> {
  * @other matrix to be added.
  * @return sum of the matrices.
  */
-operator fun Array<Array<Int>>.plus(other: Array<Array<Int>>): Array<Array<Int>> {
+operator fun Array<Array<Long>>.plus(other: Array<Array<Long>>): Array<Array<Long>> {
     val side = this.size
     val sum = newSquareMatrix(side)
 
@@ -32,7 +34,7 @@ operator fun Array<Array<Int>>.plus(other: Array<Array<Int>>): Array<Array<Int>>
  * @other matrix to be subtracted.
  * @return subtraction of the matrices.
  */
-operator fun Array<Array<Int>>.minus(other: Array<Array<Int>>): Array<Array<Int>> {
+operator fun Array<Array<Long>>.minus(other: Array<Array<Long>>): Array<Array<Long>> {
     val side = this.size
     val sum = newSquareMatrix(side)
 
@@ -51,7 +53,7 @@ operator fun Array<Array<Int>>.minus(other: Array<Array<Int>>): Array<Array<Int>
  * @param b matrix b.
  * @return matrix of size 2^n.
  */
-fun multiplyMatrices(a: Array<Array<Int>>, b: Array<Array<Int>>): Array<Array<Int>> {
+fun multiplyMatrices(a: Array<Array<Long>>, b: Array<Array<Long>>): Array<Array<Long>> {
     val side = a.size
 
     if (side == 2) {
@@ -101,7 +103,7 @@ fun multiplyMatrices(a: Array<Array<Int>>, b: Array<Array<Int>>): Array<Array<In
  * @param b matrix b.
  * @return 2x2 matrix.
  */
-fun multiply2dMatrices(a: Array<Array<Int>>, b: Array<Array<Int>>): Array<Array<Int>> {
+fun multiply2dMatrices(a: Array<Array<Long>>, b: Array<Array<Long>>): Array<Array<Long>> {
     val c = newSquareMatrix(2)
 
     c[0][0] = a[0][0]*b[0][0] + a[0][1]*b[1][0]
@@ -125,7 +127,7 @@ fun multiply2dMatrices(a: Array<Array<Int>>, b: Array<Array<Int>>): Array<Array<
  *
  * @return specified quadrant.
  */
-fun quadrantFromMatrix(m: Array<Array<Int>>, quadrant: Int): Array<Array<Int>> {
+fun quadrantFromMatrix(m: Array<Array<Long>>, quadrant: Int): Array<Array<Long>> {
     val quadrantSide = m.size / 2
     val startLine = when (quadrant) {
         1, 2 -> 0
@@ -157,11 +159,11 @@ fun quadrantFromMatrix(m: Array<Array<Int>>, quadrant: Int): Array<Array<Int>> {
  * @return square matrix of side equal to quadrant side * 2.
  */
 fun matrixFromQuadrants(
-    c11: Array<Array<Int>>,
-    c12: Array<Array<Int>>,
-    c21: Array<Array<Int>>,
-    c22: Array<Array<Int>>
-): Array<Array<Int>> {
+    c11: Array<Array<Long>>,
+    c12: Array<Array<Long>>,
+    c21: Array<Array<Long>>,
+    c22: Array<Array<Long>>
+): Array<Array<Long>> {
     val quadrantSide = c11.size
     val matrixSide = quadrantSide * 2
     val matrix = newSquareMatrix(matrixSide)
@@ -182,16 +184,44 @@ fun matrixFromQuadrants(
  *
  * m matrix.
  */
-fun printMatrix(m: Array<Array<Int>>) {
-    val n = m.size
-
-    for (i in 0 until n) {
-        for (j in 0 until n) {
-            if (j < n - 1) {
+fun printMatrix(m: Array<Array<Long>>, rows: Int, cols: Int) {
+    for (i in 0 until rows) {
+        for (j in 0 until cols) {
+            if (j < cols - 1) {
                 print("${m[i][j]} ")
             } else {
                 println("${m[i][j]}")
             }
         }
     }
+}
+
+fun main(args: Array<String>) {
+    val scanner = Scanner(System.`in`)
+    val n1 = scanner.nextInt()
+    val m1 = scanner.nextInt()
+    val n2 = scanner.nextInt()
+    val m2 = scanner.nextInt()
+
+    if (m1 != n2) {
+        throw RuntimeException("M1 != N2")
+    }
+    val n = if (m1 % 2 != 0) m1 + 1 else m1
+    val a = newSquareMatrix(n)
+    val b = newSquareMatrix(n)
+
+    for (i in 0 until n1) {
+        for (j in 0 until m1) {
+            a[i][j] = scanner.nextLong()
+        }
+    }
+    for (i in 0 until n2) {
+        for (j in 0 until m2) {
+            b[i][j] = scanner.nextLong()
+        }
+    }
+    scanner.close()
+
+    println("\nResult:\n")
+    printMatrix(multiplyMatrices(a, b), n1, m2)
 }
