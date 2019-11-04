@@ -129,7 +129,7 @@ fun multiply2dMatrices(a: Array<Array<Long>>, b: Array<Array<Long>>): Array<Arra
  */
 fun quadrantFromMatrix(m: Array<Array<Long>>, quadrant: Int): Array<Array<Long>> {
     val quadrantSide = m.size / 2
-    val startLine = when (quadrant) {
+    val startRow = when (quadrant) {
         1, 2 -> 0
         3, 4 -> quadrantSide
         else -> -1
@@ -143,7 +143,7 @@ fun quadrantFromMatrix(m: Array<Array<Long>>, quadrant: Int): Array<Array<Long>>
 
     for (i in 0 until quadrantSide) {
         for (j in 0 until quadrantSide) {
-            quadrantMatrix[i][j] = m[startLine + i][startCol + j]
+            quadrantMatrix[i][j] = m[startRow + i][startCol + j]
         }
     }
     return quadrantMatrix
